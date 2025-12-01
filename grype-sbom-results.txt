@@ -1,0 +1,36 @@
+NAME          INSTALLED  FIXED IN  TYPE    VULNERABILITY        SEVERITY  EPSS           RISK   
+django        4.2.0      4.2.3     python  GHSA-jh3w-4vvf-mjgr  High      9.6% (92nd)    7.2    
+django        4.2.0      4.2.14    python  GHSA-f6f8-9mx6-9mx2  High      6.8% (90th)    5.1    
+django        4.2.0      4.2.7     python  GHSA-qmf9-6jqf-j8fq  High      3.6% (87th)    2.7    
+django        4.2.0      4.2.6     python  GHSA-h8gc-pgj2-vjm3  High      2.8% (85th)    1.9    
+django        4.2.0      4.2.16    python  GHSA-5hgc-2vfp-mqvc  Medium    2.7% (85th)    1.4    
+django        4.2.0      4.2.11    python  GHSA-vm8q-m57g-pff3  Medium    1.9% (82nd)    1.0    
+django        4.2.0      4.2.10    python  GHSA-xxj9-f6rv-m3x4  High      1.0% (76th)    0.7    
+django        4.2.0      4.2.17    python  GHSA-m9g8-fxxm-xg86  High      0.7% (70th)    0.6    
+cryptography  41.0.7     42.0.0    python  GHSA-3ww4-gg4f-jr7f  High      0.7% (71st)    0.5    
+django        4.2.0      4.2.20    python  GHSA-p3fp-8748-vqfq  Medium    0.9% (75th)    0.5    
+django        4.2.0      4.2.17    python  GHSA-8498-2h75-472j  Medium    0.6% (68th)    0.4    
+django        4.2.0      4.2.18    python  GHSA-qcgg-j2x8-h9g8  Medium    0.6% (68th)    0.3    
+django        4.2.0      4.2.15    python  GHSA-795c-9xpc-xw6g  Medium    0.5% (66th)    0.3    
+cryptography  41.0.7     42.0.4    python  GHSA-6vqw-3v5j-54x4  High      0.4% (56th)    0.3    
+django        4.2.0      4.2.14    python  GHSA-qg2p-9jwr-mmqf  High      0.3% (55th)    0.2    
+django        4.2.0      4.2.15    python  GHSA-jh75-99hh-qvx9  Medium    0.4% (61st)    0.2    
+django        4.2.0      4.2.5     python  GHSA-7h4p-27mh-hmrw  Medium    0.4% (60th)    0.2    
+django        4.2.0      4.2.15    python  GHSA-r836-hh6v-rg5g  Medium    0.3% (50th)    0.1    
+django        4.2.0      4.2.15    python  GHSA-pv4p-cwwg-4rph  Critical  0.1% (33rd)    0.1    
+cryptography  41.0.7     42.0.2    python  GHSA-9v9h-cgj8-h64p  Medium    0.2% (43rd)    0.1    
+django        4.2.0      4.2.14    python  GHSA-9jmf-237g-qf46  High      0.1% (34th)    0.1    
+django        4.2.0      4.2.16    python  GHSA-rrqc-c2jx-6jgv  Medium    0.2% (39th)    < 0.1  
+django        4.2.0      4.2.14    python  GHSA-x7q2-wr7g-xqmf  Medium    0.1% (31st)    < 0.1  
+django        4.2.0      4.2.1     python  GHSA-r3xc-prgr-mg9p  Critical  < 0.1% (18th)  < 0.1  
+django        4.2.0      4.2.22    python  GHSA-7xr5-9hcq-chf9  Medium    < 0.1% (23rd)  < 0.1  
+requests      2.31.0     2.32.4    python  GHSA-9hjg-9r4m-mvj7  Medium    < 0.1% (20th)  < 0.1  
+requests      2.31.0     2.32.0    python  GHSA-9wx4-h78v-vm56  Medium    < 0.1% (13th)  < 0.1  
+scikit-learn  1.3.2      1.5.0     python  GHSA-jw8x-6495-233v  Medium    < 0.1% (10th)  < 0.1  
+django        4.2.0      4.2.26    python  GHSA-qw25-v68c-qjf3  High      < 0.1% (3rd)   < 0.1  
+django        4.2.0      4.2.25    python  GHSA-hpr9-3m2g-3j9p  High      < 0.1% (3rd)   < 0.1  
+django        4.2.0      4.2.21    python  GHSA-8j24-cjrq-gr2m  Medium    < 0.1% (4th)   < 0.1  
+django        4.2.0      4.2.24    python  GHSA-6w2r-r2m5-xq5w  High      < 0.1% (1st)   < 0.1  
+django        4.2.0      4.2.25    python  GHSA-q95w-c7qg-hrff  Low       < 0.1% (8th)   < 0.1  
+django        4.2.0      4.2.26    python  GHSA-frmv-pr5f-9mcr  Critical  < 0.1% (0th)   < 0.1  
+cryptography  41.0.7     43.0.1    python  GHSA-h4gh-qq45-vh27  Medium    N/A            N/A
