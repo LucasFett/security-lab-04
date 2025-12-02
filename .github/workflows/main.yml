@@ -86,7 +86,7 @@ jobs:
       
       - name: Install pip-licenses e dependências
         run: |
-          pip install -r requirements.txt
+         pip install -r ./requirements.txt
           pip install pip-licenses
       
       - name: Generate License Report
@@ -170,7 +170,7 @@ jobs:
       
       - name: Install pipdeptree e dependências
         run: |
-          pip install -r requirements.txt
+          pip install -r ./requirements.txt
           pip install pipdeptree
       
       - name: Generate Dependency Tree
