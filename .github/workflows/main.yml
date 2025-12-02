@@ -31,7 +31,10 @@ jobs:
       
       - name: Install Syft
         run: |
-          curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
+          curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b $HOME/bin
+          echo "$HOME/bin" >> $GITHUB_PATH
+
+
       
       - name: Generate SBOM com Syft (SPDX e CycloneDX)
         run: |
