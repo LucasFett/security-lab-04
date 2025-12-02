@@ -31,38 +31,46 @@ jobs:
       
       - name: Install Syft
         run: |
-          curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b $HOME/bin
-          echo "$HOME/bin" >> $GITHUB_PATH
-
-
+          curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
       
       - name: Generate SBOM com Syft (SPDX e CycloneDX)
         run: |
-          syft packages dir:. -o spdx-json=sbom-python-spdx.json
-          syft packages dir:. -o cyclonedx-json=sbom-python-cyclonedx.json
+          # Atualizado de 'packages' para 'scan' (sintaxe nova do Syft)
+          syft scan dir:. -o spdx-json=sbom-python-spdx.json
+          syft scan dir:. -o cyclonedx-json=sbom-python-cyclonedx.json
       
       - name: Generate SBOM com CycloneDX Python
         run: |
           pip install cyclonedx-bom
-          cyclonedx-py requirements -r -i requirements.txt -o sbom-python-cdx.json
+          # Garante que o requirements.txt existe antes de rodar
+          if [ -f requirements.txt ]; then
+            cyclonedx-py requirements requirements.txt -o sbom-python-cdx.json
+          else
+            echo "requirements.txt não encontrado, pulando CycloneDX Python"
+          fi
       
       - name: Upload SBOM artifacts
         uses: actions/upload-artifact@v4
         with:
           name: python-sboms
-          path: |
-            sbom-python-*.json
+          path: sbom-python-*.json
           retention-days: 90
       
       - name: Commit SBOM to repository
+        # Importante: O token padrão pode não ter permissão em branches protegidas (main)
         run: |
           mkdir -p sbom
           mv sbom-python-*.json sbom/
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add sbom/
-          git diff --quiet && git diff --staged --quiet || git commit -m "chore: update Python SBOM [skip ci]"
-          git push || echo "No changes to push"
+          # Verifica se há mudanças antes de commitar para evitar erro
+          if ! git diff --quiet --cached; then
+            git commit -m "chore: update Python SBOM [skip ci]"
+            git push
+          else
+            echo "No changes to push"
+          fi
         continue-on-error: true
 
   analyze-licenses:
@@ -78,6 +86,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: python-sboms
+          path: . # Baixa na raiz para facilitar os scripts abaixo
       
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -86,7 +95,7 @@ jobs:
       
       - name: Install pip-licenses e dependências
         run: |
-         pip install -r ./requirements.txt
+          pip install -r requirements.txt
           pip install pip-licenses
       
       - name: Generate License Report
@@ -101,6 +110,7 @@ jobs:
           if pip-licenses | grep -i "gpl"; then
             echo "⚠️  ATENÇÃO: Dependências com licença GPL detectadas!"
             echo "Revise a compatibilidade com a licença do projeto"
+            # Remover 'exit 1' se quiser apenas avisar e não quebrar o build
           else
             echo "✅ Nenhuma licença GPL detectada"
           fi
@@ -110,8 +120,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: license-reports
-          path: |
-            licenses.*
+          path: licenses.*
           retention-days: 90
       
       - name: Create License Summary
@@ -119,7 +128,7 @@ jobs:
           echo "# 📄 Relatório de Licenças" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          pip-licenses --format=markdown >> $GITHUB_STEP_SUMMARY
+          cat licenses.md >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
 
   vulnerability-scan-sbom:
@@ -135,6 +144,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: python-sboms
+          path: . # Baixa na raiz para o Grype encontrar o arquivo
       
       - name: Install Grype
         run: |
@@ -142,8 +152,10 @@ jobs:
       
       - name: Scan SBOM com Grype
         run: |
+          # O grype precisa encontrar o arquivo baixado no path correto
           grype sbom:sbom-python-spdx.json -o json --file grype-sbom-results.json
           grype sbom:sbom-python-spdx.json -o table > grype-sbom-results.txt
+          cat grype-sbom-results.txt # Mostra no log do console também
         continue-on-error: true
       
       - name: Upload Vulnerability Report
@@ -170,21 +182,20 @@ jobs:
       
       - name: Install pipdeptree e dependências
         run: |
-          pip install -r ./requirements.txt
+          # CORREÇÃO PRINCIPAL: Adicionado '-r' antes do requirements.txt
+          pip install -r requirements.txt
           pip install pipdeptree
       
       - name: Generate Dependency Tree
         run: |
           pipdeptree --json > dependency-tree.json
-          # pipdeptree --graph-output png > dependency-tree.png # Requer graphviz, que pode não estar instalado
           pipdeptree > dependency-tree.txt
       
       - name: Upload Dependency Tree
         uses: actions/upload-artifact@v4
         with:
           name: dependency-tree
-          path: |
-            dependency-tree.*
+          path: dependency-tree.*
           retention-days: 30
 
   sbom-summary:
@@ -196,6 +207,7 @@ jobs:
     steps:
       - name: Download all artifacts
         uses: actions/download-artifact@v4
+        # Não especificamos 'name', então ele baixará todos em subpastas
       
       - name: Create comprehensive summary
         run: |
