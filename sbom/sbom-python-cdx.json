@@ -328,7 +328,7 @@
     }
   ],
   "metadata": {
-    "timestamp": "2026-08-31T09:23:46.070527+00:00",
+    "timestamp": "2026-09-07T07:59:11.792831+00:00",
     "tools": {
       "components": [
         {
@@ -432,7 +432,7 @@
       ]
     }
   },
-  "serialNumber": "urn:uuid:43152354-b88a-45cc-9a64-9a4a3c354884",
+  "serialNumber": "urn:uuid:9507dbf4-4210-4f9d-8c8a-8e45a048eb9c",
   "version": 1,
   "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
   "bomFormat": "CycloneDX",
